@@ -154,10 +154,29 @@ export default function BlogPage() {
 
         {/* ============ ステップ1：ターゲット入力 ============ */}
         {phase === 'target' && (
-          <form onSubmit={generateIdeas} className="flex flex-col gap-4">
-            <div className="bg-[#F4EDFD] rounded-2xl px-5 py-4 text-sm text-[#7B4FA0]">
-              <p className="font-bold mb-1">💡 使い方</p>
-              <p>ターゲットを入力すると、そのお客様が持っている「不安・疑問・思い込み・疑い」が出てきます。1つ選ぶとブログのテーマになります。</p>
+          <form onSubmit={generateIdeas} className="flex flex-col gap-5">
+
+            {/* タイトルエリア */}
+            <div className="text-center py-4">
+              <p className="text-2xl font-bold text-[#333] mb-2">まずはターゲットを決めよう！</p>
+              <p className="text-sm text-[#666]">
+                どんなお客様向けに書くかを入力すると<br />
+                そのお客様が持っている<span className="text-[#9B6DC3] font-bold">不安・疑問・思い込み・疑い</span>が出てきます
+              </p>
+            </div>
+
+            {/* ステップ説明 */}
+            <div className="flex gap-3">
+              {[
+                { num: '1', label: 'ターゲット入力', active: true },
+                { num: '2', label: 'テーマを選ぶ', active: false },
+                { num: '3', label: 'ブログ完成！', active: false },
+              ].map(s => (
+                <div key={s.num} className={`flex-1 flex flex-col items-center gap-1 py-3 rounded-xl text-xs font-bold ${s.active ? 'bg-[#C9A8E2] text-white' : 'bg-white border border-[#EDE8F5] text-[#bbb]'}`}>
+                  <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${s.active ? 'bg-white text-[#9B6DC3]' : 'bg-[#F5F5F5] text-[#bbb]'}`}>{s.num}</span>
+                  {s.label}
+                </div>
+              ))}
             </div>
 
             <div className="bg-white rounded-2xl border border-[#EDE8F5] p-5">
@@ -175,7 +194,7 @@ export default function BlogPage() {
             </div>
 
             <Button type="submit" loading={ideasLoading} disabled={!target.trim()} size="lg" className="w-full">
-              {ideasLoading ? '分析中...' : 'このターゲットの不安・疑問を出す'}
+              {ideasLoading ? '分析中...' : 'このターゲットの不安・疑問を出す →'}
             </Button>
           </form>
         )}

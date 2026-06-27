@@ -58,13 +58,17 @@ ${target}
 - 〇〇
 `
 
-  const response = await openai.chat.completions.create({
-    model: 'gpt-4o',
-    temperature: 0.7,
-    max_tokens: 800,
-    messages: [{ role: 'user', content: prompt }],
-  })
-
-  const text = response.choices[0].message.content ?? ''
-  return Response.json({ ideas: text })
+  try {
+    const response = await openai.chat.completions.create({
+      model: 'gpt-4o',
+      temperature: 0.7,
+      max_tokens: 800,
+      messages: [{ role: 'user', content: prompt }],
+    })
+    const text = response.choices[0].message.content ?? ''
+    return Response.json({ ideas: text })
+  } catch (e) {
+    console.error('Blog ideas error:', e)
+    return new Response('AIの呼び出しに失敗しました', { status: 500 })
+  }
 }
