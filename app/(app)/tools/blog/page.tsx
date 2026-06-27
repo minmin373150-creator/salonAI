@@ -13,6 +13,29 @@ const LENGTH_OPTIONS = [
 
 type Phase = 'target' | 'ideas' | 'write'
 
+// 長い行を自動改行する関数
+function formatBlogText(text: string): string {
+  return text.split('\n').map(line => {
+    // 空行・タイトル行・短い行はそのまま
+    if (line.trim() === '' || line.startsWith('【') || line.length <= 25) return line
+    // 25文字超の行を句読点で分割
+    const result: string[] = []
+    let current = ''
+    for (const char of line) {
+      current += char
+      if ((char === '。' || char === '、') && current.length >= 15) {
+        result.push(current)
+        current = ''
+      } else if (current.length >= 25 && char !== '」' && char !== '』') {
+        result.push(current)
+        current = ''
+      }
+    }
+    if (current) result.push(current)
+    return result.join('\n')
+  }).join('\n')
+}
+
 // アイデアテキストを行ごとにパース
 function parseIdeas(text: string): { category: string; items: string[] }[] {
   const result: { category: string; items: string[] }[] = []
@@ -114,7 +137,7 @@ export default function BlogPage() {
   }
 
   async function handleCopy() {
-    await navigator.clipboard.writeText(output)
+    await navigator.clipboard.writeText(formatBlogText(output))
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
@@ -325,7 +348,7 @@ export default function BlogPage() {
                 </div>
 
                 {output ? (
-                  <div className="text-sm text-[#333] leading-loose whitespace-pre-wrap">{output}</div>
+                  <div className="text-sm text-[#333] leading-loose whitespace-pre-wrap">{formatBlogText(output)}</div>
                 ) : (
                   <div className="flex flex-col gap-3">
                     {[...Array(5)].map((_, i) => (
