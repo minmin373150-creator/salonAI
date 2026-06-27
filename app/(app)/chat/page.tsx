@@ -39,9 +39,10 @@ const TOOLS = [
     id: 'catchcopy',
     icon: Type,
     title: 'キャッチコピー作成',
-    desc: 'メニュー・クーポン・Instagram投稿に使える刺さるコピーをAIが提案。',
+    desc: 'クーポン名・Instagram・メニュー名・POP・LINE配信など用途別に、刺さるコピーを10個提案。',
     href: '/tools/catchcopy',
-    available: false,
+    available: true,
+    badge: 'NEW',
   },
   {
     id: 'counseling-roleplay',
