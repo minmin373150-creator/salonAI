@@ -21,9 +21,10 @@ const TOOLS = [
     id: 'blog',
     icon: FileText,
     title: 'ブログ作成',
-    desc: 'サロンの集客に効くブログ記事をAIが作成。SEOも考慮した内容で、書くのが苦手でも大丈夫。',
+    desc: 'テーマを入れるだけで予約率が上がるブログをAIが作成。PREP法で書かれた、見込み客の背中を押す記事に。',
     href: '/tools/blog',
-    available: false,
+    available: true,
+    badge: 'NEW',
   },
   {
     id: 'review-reply',
