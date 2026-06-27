@@ -2,6 +2,13 @@ import { NextRequest } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { openai } from '@/lib/openai/client'
 import { REVIEW_REPLY_PROMPT } from '@/prompts/review-reply'
+import { NAIL_NG_RULES } from '@/prompts/ng-words'
+
+function getIndustryNG(salonType?: string): string {
+  if (!salonType) return ''
+  if (salonType.includes('ネイル') || salonType.includes('フット')) return NAIL_NG_RULES
+  return ''
+}
 
 export const runtime = 'nodejs'
 export const maxDuration = 60
@@ -52,7 +59,7 @@ ${review}
     temperature: 0.7,
     max_tokens: 800,
     messages: [
-      { role: 'system', content: REVIEW_REPLY_PROMPT },
+      { role: 'system', content: REVIEW_REPLY_PROMPT + getIndustryNG(salonType || profile?.salon_type) },
       { role: 'user', content: userMessage },
     ],
   })

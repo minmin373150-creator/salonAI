@@ -2,6 +2,13 @@ import { NextRequest } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { openai } from '@/lib/openai/client'
 import { BLOG_PROMPT } from '@/prompts/blog'
+import { NAIL_NG_RULES } from '@/prompts/ng-words'
+
+function getIndustryNG(salonType?: string): string {
+  if (!salonType) return ''
+  if (salonType.includes('ネイル') || salonType.includes('フット')) return NAIL_NG_RULES
+  return ''
+}
 
 export const runtime = 'nodejs'
 export const maxDuration = 60
@@ -53,7 +60,7 @@ ${lengthGuide}
     temperature: 0.7,
     max_tokens: 2000,
     messages: [
-      { role: 'system', content: BLOG_PROMPT },
+      { role: 'system', content: BLOG_PROMPT + getIndustryNG(profile?.salon_type) },
       { role: 'user', content: userMessage },
     ],
   })
