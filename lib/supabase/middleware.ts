@@ -47,7 +47,7 @@ export async function updateSession(request: NextRequest) {
   }
 
   // ログイン後エリアは認証必須
-  const protectedPaths = ['/chat', '/history', '/settings', '/billing', '/contact']
+  const protectedPaths = ['/chat', '/tools', '/history', '/settings', '/billing', '/contact']
   if (protectedPaths.some((p) => pathname.startsWith(p))) {
     if (!user) {
       return NextResponse.redirect(new URL('/login', request.url))
