@@ -51,9 +51,18 @@ export async function POST(req: NextRequest) {
 こだわり：${profile.commitment || ''}
 ` : ''
 
+  const usageLabelMap: Record<string, string> = {
+    top_catch: 'トップキャッチ（50文字以内）',
+    top_copy: 'トップコピー（150文字以内）',
+    coupon_name: 'クーポン名（36文字以内）',
+    coupon_detail: 'クーポン内容（90文字以内）',
+    special_catch: '特集キャッチ（50文字以内）',
+    special_copy: '特集コピー（100文字以内）',
+  }
+
   const userMessage = `
 ${profileText}
-【用途】${usage || 'クーポン名・キャッチコピー'}
+【用途】${usageLabelMap[usage] || usage}
 【ターゲット・悩み】${target || '未指定'}
 【メニュー・施術内容】${menu || '未指定'}
 【アピールしたいこと】${appeal || '未指定'}

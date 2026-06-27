@@ -6,12 +6,12 @@ import { ArrowLeft, Type, Loader, Copy, Check } from 'lucide-react'
 import Button from '@/components/ui/Button'
 
 const USAGE_OPTIONS = [
-  { value: 'coupon', label: 'クーポン名', desc: 'ホットペッパーのクーポンタイトル' },
-  { value: 'instagram', label: 'Instagram', desc: '投稿のキャッチコピー・文頭' },
-  { value: 'menu', label: 'メニュー名', desc: 'サロンのメニュー・コース名' },
-  { value: 'blog', label: 'ブログタイトル', desc: 'ブログ記事のタイトル' },
-  { value: 'pop', label: '店頭POP', desc: 'サロン内に貼るPOP' },
-  { value: 'line', label: 'LINE配信', desc: 'LINEのメッセージタイトル' },
+  { value: 'top_catch', label: 'トップキャッチ', desc: '50文字以内', limit: 50 },
+  { value: 'top_copy', label: 'トップコピー', desc: '150文字以内', limit: 150 },
+  { value: 'coupon_name', label: 'クーポン名', desc: '36文字以内', limit: 36 },
+  { value: 'coupon_detail', label: 'クーポン内容', desc: '90文字以内', limit: 90 },
+  { value: 'special_catch', label: '特集キャッチ', desc: '50文字以内', limit: 50 },
+  { value: 'special_copy', label: '特集コピー', desc: '100文字以内', limit: 100 },
 ]
 
 export default function CatchcopyPage() {
@@ -80,9 +80,10 @@ export default function CatchcopyPage() {
 
           {/* 用途 */}
           <div className="bg-white rounded-2xl border border-[#EDE8F5] p-5">
-            <label className="text-sm font-bold text-[#333] mb-3 block">
-              何に使うコピーですか？
+            <label className="text-sm font-bold text-[#333] mb-1 block">
+              ホットペッパーのどこに使いますか？
             </label>
+            <p className="text-xs text-[#999] mb-3">文字数制限に合わせて最適なコピーを作ります</p>
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
               {USAGE_OPTIONS.map(opt => (
                 <button
