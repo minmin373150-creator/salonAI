@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { openai } from '@/lib/openai/client'
 import { REVIEW_REPLY_PROMPT } from '@/prompts/review-reply'
-import { NAIL_NG_RULES, HAIR_NG_RULES, EYE_NG_RULES, ESTHE_NG_RULES, SEITAI_NG_RULES } from '@/prompts/ng-words'
+import { NAIL_NG_RULES, HAIR_NG_RULES, EYE_NG_RULES, ESTHE_NG_RULES, SEITAI_NG_RULES, RELAX_NG_RULES } from '@/prompts/ng-words'
 
 function getIndustryNG(salonType?: string): string {
   if (!salonType) return ''
@@ -11,6 +11,7 @@ function getIndustryNG(salonType?: string): string {
   if (salonType.includes('アイ') || salonType.includes('まつ') || salonType.includes('眉')) return EYE_NG_RULES
   if (salonType.includes('エステ') || salonType.includes('ダイエット') || salonType.includes('脱毛')) return ESTHE_NG_RULES
   if (salonType.includes('整体') || salonType.includes('鍼') || salonType.includes('整骨') || salonType.includes('カイロ')) return SEITAI_NG_RULES
+  if (salonType.includes('ヘッドスパ') || salonType.includes('リンパ') || salonType.includes('マッサージ') || salonType.includes('リラク')) return RELAX_NG_RULES
   return ''
 }
 
