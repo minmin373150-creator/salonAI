@@ -31,7 +31,7 @@ export default function CounselingRoleplayPage() {
 
   const [phase, setPhase] = useState<'setup' | 'roleplay' | 'feedback'>('setup')
   const [listening, setListening] = useState(false)
-  const recognitionRef = useRef<SpeechRecognition | null>(null)
+  const recognitionRef = useRef<{ stop: () => void } | null>(null)
   const bottomRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
@@ -48,8 +48,15 @@ export default function CounselingRoleplayPage() {
 
   // 音声入力
   function toggleListening() {
-    const SR = (window as unknown as { SpeechRecognition?: typeof SpeechRecognition; webkitSpeechRecognition?: typeof SpeechRecognition }).SpeechRecognition
-      || (window as unknown as { webkitSpeechRecognition?: typeof SpeechRecognition }).webkitSpeechRecognition
+    type AnySR = {
+      lang: string; continuous: boolean; interimResults: boolean
+      onresult: ((e: { results: { length: number; [i: number]: { [j: number]: { transcript: string } } } }) => void) | null
+      onend: (() => void) | null
+      onerror: (() => void) | null
+      start: () => void; stop: () => void
+    }
+    const w = window as unknown as { SpeechRecognition?: new () => AnySR; webkitSpeechRecognition?: new () => AnySR }
+    const SR = w.SpeechRecognition || w.webkitSpeechRecognition
     if (!SR) { alert('このブラウザは音声入力に対応していません'); return }
 
     if (listening) {
@@ -64,23 +71,16 @@ export default function CounselingRoleplayPage() {
     recognition.continuous = false
     recognition.interimResults = false
 
-    let hasResult = false // 二重取得を防ぐフラグ
-
-    recognition.onresult = (event: SpeechRecognitionEvent) => {
+    let hasResult = false
+    recognition.onresult = (event) => {
       if (hasResult) return
       hasResult = true
       const text = event.results[event.results.length - 1][0].transcript
       setInput(prev => prev + text)
       recognition.stop()
     }
-    recognition.onend = () => {
-      recognitionRef.current = null
-      setListening(false)
-    }
-    recognition.onerror = () => {
-      recognitionRef.current = null
-      setListening(false)
-    }
+    recognition.onend = () => { recognitionRef.current = null; setListening(false) }
+    recognition.onerror = () => { recognitionRef.current = null; setListening(false) }
     recognitionRef.current = recognition
     recognition.start()
     setListening(true)
