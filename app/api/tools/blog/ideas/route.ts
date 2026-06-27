@@ -32,10 +32,12 @@ ${salonInfo ? `【サロン情報】\n${salonInfo}\n` : ''}
 ${target}
 
 ## 出力ルール
-- 不安・疑問・思い込み・疑いのカテゴリに分けて、それぞれ2〜3個ずつ出す
-- お客様の言葉で書く（施術者目線NG）
+- 不安・疑問・思い込み・疑いのカテゴリに分けて、それぞれ5〜8個ずつ出す（合計20〜30個）
+- お客様の言葉・口語で書く（施術者目線NG）
 - 具体的に書く（「効果があるか不安」ではなく「本当に1回で変化が出るの？」）
+- リアルなお客様の心の声として書く
 - 各項目は1行で完結させる
+- 似たような内容は避け、バリエーションをつける
 
 ## 出力形式（必ずこのフォーマットで）
 
@@ -62,7 +64,7 @@ ${target}
     const response = await openai.chat.completions.create({
       model: 'gpt-4o',
       temperature: 0.7,
-      max_tokens: 800,
+      max_tokens: 1500,
       messages: [{ role: 'user', content: prompt }],
     })
     const text = response.choices[0].message.content ?? ''
