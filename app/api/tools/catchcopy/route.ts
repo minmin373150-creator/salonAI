@@ -52,12 +52,9 @@ export async function POST(req: NextRequest) {
 ` : ''
 
   const usageLabelMap: Record<string, string> = {
-    top_catch: 'トップキャッチ（50文字以内）',
-    top_copy: 'トップコピー（150文字以内）',
-    coupon_name: 'クーポン名（36文字以内）',
-    coupon_detail: 'クーポン内容（90文字以内）',
-    special_catch: '特集キャッチ（50文字以内）',
-    special_copy: '特集コピー（100文字以内）',
+    top: 'top（トップキャッチ50文字＋トップコピー150文字のセット）',
+    coupon: 'coupon（クーポン名36文字＋クーポン内容90文字のセット）',
+    special: 'special（特集キャッチ50文字＋特集コピー100文字のセット）',
   }
 
   const userMessage = `

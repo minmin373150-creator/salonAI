@@ -6,12 +6,9 @@ import { ArrowLeft, Type, Loader, Copy, Check } from 'lucide-react'
 import Button from '@/components/ui/Button'
 
 const USAGE_OPTIONS = [
-  { value: 'top_catch', label: 'トップキャッチ', desc: '50文字以内', limit: 50 },
-  { value: 'top_copy', label: 'トップコピー', desc: '150文字以内', limit: 150 },
-  { value: 'coupon_name', label: 'クーポン名', desc: '36文字以内', limit: 36 },
-  { value: 'coupon_detail', label: 'クーポン内容', desc: '90文字以内', limit: 90 },
-  { value: 'special_catch', label: '特集キャッチ', desc: '50文字以内', limit: 50 },
-  { value: 'special_copy', label: '特集コピー', desc: '100文字以内', limit: 100 },
+  { value: 'top', label: 'トップキャッチ＋コピー', desc: 'キャッチ50文字・コピー150文字' },
+  { value: 'coupon', label: 'クーポン名＋内容', desc: 'クーポン名36文字・内容90文字' },
+  { value: 'special', label: '特集キャッチ＋コピー', desc: 'キャッチ50文字・コピー100文字' },
 ]
 
 export default function CatchcopyPage() {
@@ -81,16 +78,16 @@ export default function CatchcopyPage() {
           {/* 用途 */}
           <div className="bg-white rounded-2xl border border-[#EDE8F5] p-5">
             <label className="text-sm font-bold text-[#333] mb-1 block">
-              ホットペッパーのどこに使いますか？
+              どこに使うコピーですか？
             </label>
-            <p className="text-xs text-[#999] mb-3">文字数制限に合わせて最適なコピーを作ります</p>
-            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+            <p className="text-xs text-[#999] mb-3">キャッチと本文をセットで10案ずつ作ります</p>
+            <div className="flex flex-col gap-2">
               {USAGE_OPTIONS.map(opt => (
                 <button
                   key={opt.value}
                   type="button"
                   onClick={() => setUsage(opt.value)}
-                  className={`p-3 rounded-xl border text-left transition-colors ${
+                  className={`p-4 rounded-xl border text-left transition-colors ${
                     usage === opt.value
                       ? 'bg-[#C9A8E2] text-white border-[#C9A8E2]'
                       : 'bg-white text-[#666] border-[#EDE8F5] hover:border-[#C9A8E2]'
