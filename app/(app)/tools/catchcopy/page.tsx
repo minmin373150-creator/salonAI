@@ -6,8 +6,8 @@ import { ArrowLeft, Type, Loader, Copy, Check } from 'lucide-react'
 import Button from '@/components/ui/Button'
 
 const USAGE_OPTIONS = [
-  { value: 'top', label: 'トップキャッチ＋コピー', desc: 'キャッチ50文字・コピー150文字' },
-  { value: 'coupon', label: 'クーポン名＋内容', desc: 'クーポン名36文字・内容90文字' },
+  { value: 'top', label: 'トップページキャッチ＋コピー', desc: 'キャッチ50文字・コピー150文字' },
+  { value: 'coupon', label: 'クーポン名＋詳細文', desc: 'クーポン名36文字・詳細90文字' },
   { value: 'special', label: '特集キャッチ＋コピー', desc: 'キャッチ50文字・コピー100文字' },
 ]
 
@@ -78,7 +78,7 @@ export default function CatchcopyPage() {
           {/* 用途 */}
           <div className="bg-white rounded-2xl border border-[#EDE8F5] p-5">
             <label className="text-sm font-bold text-[#333] mb-1 block">
-              どこに使うコピーですか？
+              ホットペッパーのどこに使いますか？
             </label>
             <p className="text-xs text-[#999] mb-3">キャッチと本文をセットで10案ずつ作ります</p>
             <div className="flex flex-col gap-2">
@@ -151,7 +151,7 @@ export default function CatchcopyPage() {
             size="lg"
             className="w-full"
           >
-            {loading ? '作成中...' : 'キャッチコピーを10個作る'}
+            {loading ? '作成中...' : 'キャッチ＋コピーをセットで10案作る'}
           </Button>
         </form>
 

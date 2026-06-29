@@ -39,7 +39,7 @@ const TOOLS = [
     id: 'catchcopy',
     icon: Type,
     title: 'キャッチコピー作成',
-    desc: 'クーポン名・Instagram・メニュー名・POP・LINE配信など用途別に、刺さるコピーを10個提案。',
+    desc: 'ホットペッパーのトップページ・クーポン・特集に使える、予約につながるコピーをセットで10案提案。',
     href: '/tools/catchcopy',
     available: true,
     badge: 'NEW',

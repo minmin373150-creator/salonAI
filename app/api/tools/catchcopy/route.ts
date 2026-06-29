@@ -52,8 +52,8 @@ export async function POST(req: NextRequest) {
 ` : ''
 
   const usageLabelMap: Record<string, string> = {
-    top: 'top（トップキャッチ50文字＋トップコピー150文字のセット）',
-    coupon: 'coupon（クーポン名36文字＋クーポン内容90文字のセット）',
+    top: 'top（トップページキャッチ50文字＋トップコピー150文字のセット）',
+    coupon: 'coupon（クーポン名36文字＋クーポン詳細文90文字のセット）',
     special: 'special（特集キャッチ50文字＋特集コピー100文字のセット）',
   }
 
@@ -70,7 +70,7 @@ ${knowledgeContext ? `\n【参考にすべき添削事例・ノウハウ】\n${k
     model: 'gpt-4o',
     stream: true,
     temperature: 0.8,
-    max_tokens: 1500,
+    max_tokens: 4000,
     messages: [
       { role: 'system', content: CATCHCOPY_PROMPT + getIndustryNG(salonType) },
       { role: 'user', content: userMessage },
