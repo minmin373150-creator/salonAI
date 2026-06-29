@@ -12,7 +12,7 @@ const USAGE_OPTIONS = [
 ]
 
 export default function CatchcopyPage() {
-  const [usage, setUsage] = useState('coupon')
+  const [usage, setUsage] = useState('top')
   const [target, setTarget] = useState('')
   const [menu, setMenu] = useState('')
   const [appeal, setAppeal] = useState('')
@@ -151,7 +151,7 @@ export default function CatchcopyPage() {
             size="lg"
             className="w-full"
           >
-            {loading ? '作成中...' : 'キャッチ＋コピーをセットで10案作る'}
+            {loading ? '作成中...' : 'キャッチ＋コピーをセットで5案ずつ作る'}
           </Button>
         </form>
 
