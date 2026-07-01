@@ -138,7 +138,7 @@ export async function POST(req: NextRequest) {
     new ReadableStream({
       async start(controller) {
         // 取得件数を最初に送信
-        controller.enqueue(encoder.encode(`📋 口コミ${allReviews.length}件（全${totalPages}ページ）を分析中...\n\n`))
+        controller.enqueue(encoder.encode(`📋 口コミを取得して分析中...\n\n`))
         for await (const chunk of stream) {
           const text = chunk.choices[0]?.delta?.content ?? ''
           if (text) controller.enqueue(encoder.encode(text))
