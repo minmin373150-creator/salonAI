@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Stethoscope, FileText, Star, Type, MessageSquare, Lock, Store, ChevronRight } from 'lucide-react'
+import { Stethoscope, FileText, Star, Type, MessageSquare, Lock, Store, ChevronRight, BarChart2 } from 'lucide-react'
 import Logo from '@/components/ui/Logo'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
@@ -50,6 +50,15 @@ const TOOLS = [
     title: 'カウンセリングロールプレイ',
     desc: 'AIがリアルなお客様役になり、カウンセリングの練習ができる。終了後にみなみが時系列で徹底添削。',
     href: '/tools/counseling-roleplay',
+    available: true,
+    badge: 'NEW',
+  },
+  {
+    id: 'research',
+    icon: BarChart2,
+    title: '自社・競合リサーチ分析',
+    desc: 'HPBエリア検索で自社が何ページ目の何番目に掲載されているかを自動チェック。競合サロンの分析も近日公開。',
+    href: '/tools/research',
     available: true,
     badge: 'NEW',
   },
