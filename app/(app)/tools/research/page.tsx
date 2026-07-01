@@ -1,17 +1,18 @@
 'use client'
 
 import Link from 'next/link'
-import { ArrowLeft, Trophy, Users, ChevronRight, BarChart2 } from 'lucide-react'
+import { ArrowLeft, Star, Users, ChevronRight, BarChart2 } from 'lucide-react'
 
 const SUB_TOOLS = [
   {
-    href: '/tools/research/own',
-    icon: Trophy,
-    color: '#4A9FC3',
-    bg: '#D5EAF5',
-    title: '自社リサーチ分析',
-    desc: 'エリア検索で自社が何ページ目の何番目に掲載されているかを自動チェック。順位に応じた改善アドバイスも表示。',
+    href: '/tools/research/review',
+    icon: Star,
+    color: '#F59E0B',
+    bg: '#FEF3CD',
+    title: '口コミ分析',
+    desc: 'HPBの口コミページURLを貼るだけで全件取得。強み・改善点・HPBに活かせるフレーズをまとめて分析。',
     badge: 'NEW',
+    disabled: false,
   },
   {
     href: '/tools/research/competitor',
