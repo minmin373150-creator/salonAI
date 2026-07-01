@@ -6,15 +6,32 @@ export const maxDuration = 60
 
 function extractSalonNames(html: string): string[] {
   const names: string[] = []
-  // HPBのサロン名は <h3> 内の <a> タグに入っている
-  const regex = /<h3[^>]*>\s*<a[^>]*href="\/[^"]*\/[^"]+\/[^"]*"[^>]*>([^<]+)<\/a>/g
+  const seen = new Set<string>()
+
+  // HPBのサロンURLは /slnH{数字}/ の形式
+  const regex = /href="[^"]*\/slnH\d+[^"]*"[^>]*>([\s\S]*?)<\/a>/g
   let match
   while ((match = regex.exec(html)) !== null) {
-    const name = match[1].trim()
-    if (name && name.length > 1 && !name.includes('ホットペッパー')) {
+    // HTMLタグを除去してテキストだけ取得
+    const name = match[1].replace(/<[^>]+>/g, '').trim()
+    if (name && name.length > 1 && !seen.has(name)) {
+      seen.add(name)
       names.push(name)
     }
   }
+
+  // fallback: <h3> 内の <a> タグ
+  if (names.length === 0) {
+    const h3Regex = /<h3[\s\S]*?<a[^>]*>([\s\S]*?)<\/a>[\s\S]*?<\/h3>/g
+    while ((match = h3Regex.exec(html)) !== null) {
+      const name = match[1].replace(/<[^>]+>/g, '').trim()
+      if (name && name.length > 2 && !name.includes('ホットペッパー') && !seen.has(name)) {
+        seen.add(name)
+        names.push(name)
+      }
+    }
+  }
+
   return names
 }
 
@@ -79,11 +96,19 @@ export async function POST(req: NextRequest) {
         html = await res.text()
       }
 
-      // サロン名が含まれているかチェック（部分一致）
-      if (!html.includes(salonName)) continue
-
       const names = extractSalonNames(html)
-      const indexInPage = names.findIndex(n => n.includes(salonName) || salonName.includes(n.substring(0, 10)))
+
+      // 正規化して比較（スペース・大文字小文字を統一）
+      const normalize = (s: string) => s.replace(/[\s　]+/g, '').toLowerCase()
+      const normalizedTarget = normalize(salonName)
+
+      const indexInPage = names.findIndex(n => {
+        const normalizedN = normalize(n)
+        return normalizedN.includes(normalizedTarget) ||
+          normalizedTarget.includes(normalizedN) ||
+          // 先頭10文字の部分一致
+          (normalizedTarget.length > 5 && normalizedN.includes(normalizedTarget.substring(0, 5)))
+      })
 
       if (indexInPage !== -1) {
         const positionInPage = indexInPage + 1
