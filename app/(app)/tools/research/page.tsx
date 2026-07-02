@@ -21,8 +21,8 @@ const SUB_TOOLS = [
     bg: '#E8D5F5',
     title: '競合リサーチ分析',
     desc: '競合サロンのURLを貼るだけでAIが自動取得・分析。キャッチコピー・価格帯・強みを比較して差別化ポイントを提案。',
-    badge: 'SOON',
-    disabled: true,
+    badge: 'NEW',
+    disabled: false,
   },
 ]
 
