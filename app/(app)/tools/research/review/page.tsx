@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { saveHistory } from '@/lib/saveHistory'
 import Link from 'next/link'
 import { ArrowLeft, Star, Loader, Copy, Check } from 'lucide-react'
 import Button from '@/components/ui/Button'
@@ -42,6 +43,7 @@ export default function ReviewAnalysisPage() {
         text += decoder.decode(value, { stream: true })
         setOutput(text)
       }
+      await saveHistory('口コミ分析', reviewUrl, text)
     } catch {
       setError('通信エラーが発生しました。もう一度お試しください。')
     } finally {

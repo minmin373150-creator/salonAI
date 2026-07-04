@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { saveHistory } from '@/lib/saveHistory'
 import Link from 'next/link'
 import { ArrowLeft, Star, Loader, Copy, Check } from 'lucide-react'
 import Button from '@/components/ui/Button'
@@ -48,6 +49,7 @@ export default function ReviewReplyPage() {
         accumulated += decoder.decode(value, { stream: true })
         setOutput(accumulated)
       }
+      await saveHistory('口コミ返信作成', review.substring(0, 100), accumulated)
     } catch {
       setOutput('エラーが発生しました。もう一度お試しください。')
     } finally {

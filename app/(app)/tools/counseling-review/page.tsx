@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { saveHistory } from '@/lib/saveHistory'
 import Link from 'next/link'
 import { ArrowLeft, Stethoscope, Loader } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
@@ -111,6 +112,7 @@ export default function CounselingReviewPage() {
         accumulated += decoder.decode(value, { stream: true })
         setResult(accumulated)
       }
+      await saveHistory('カウンセリング添削', transcript.substring(0, 100) + '…', accumulated)
     } catch {
       setResult('エラーが発生しました。もう一度お試しください。')
     } finally {

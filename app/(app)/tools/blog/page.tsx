@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { saveHistory } from '@/lib/saveHistory'
 import Link from 'next/link'
 import { ArrowLeft, FileText, Loader, Copy, Check, ChevronRight, RotateCcw } from 'lucide-react'
 import Button from '@/components/ui/Button'
@@ -129,6 +130,7 @@ export default function BlogPage() {
         text += decoder.decode(value, { stream: true })
         setOutput(text)
       }
+      await saveHistory('ブログ作成', selectedIdea.substring(0, 80), text)
     } catch {
       setOutput('エラーが発生しました。もう一度お試しください。')
     } finally {

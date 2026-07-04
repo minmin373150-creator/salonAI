@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Stethoscope, FileText, Star, Type, MessageSquare, Lock, Store, ChevronRight, BarChart2 } from 'lucide-react'
+import { Stethoscope, FileText, Star, MessageSquare, Lock, Store, ChevronRight, BarChart2, Clock } from 'lucide-react'
 import Logo from '@/components/ui/Logo'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
@@ -32,15 +32,6 @@ const TOOLS = [
     title: '口コミ返信作成',
     desc: '良い口コミも悪い口コミも、みなみ流の温かい返信文をAIが作成。見込み客の予約後押しになる返信が作れます。',
     href: '/tools/review-reply',
-    available: true,
-    badge: 'NEW',
-  },
-  {
-    id: 'catchcopy',
-    icon: Type,
-    title: 'キャッチコピー作成',
-    desc: 'ホットペッパーのトップページ・クーポン・特集に使える、予約につながるコピーをセットで10案提案。',
-    href: '/tools/catchcopy',
     available: true,
     badge: 'NEW',
   },
@@ -89,12 +80,18 @@ export default function DashboardPage() {
       {/* ヘッダー */}
       <header className="bg-white border-b border-[#EDE8F5] px-6 py-4 flex items-center justify-between">
         <Logo />
-        <button
-          onClick={handleLogout}
-          className="text-sm text-[#999] hover:text-[#666] transition-colors"
-        >
-          ログアウト
-        </button>
+        <div className="flex items-center gap-3">
+          <Link href="/history" className="flex items-center gap-1.5 text-sm text-[#999] hover:text-[#666] transition-colors">
+            <Clock className="w-4 h-4" />
+            <span>履歴</span>
+          </Link>
+          <button
+            onClick={handleLogout}
+            className="text-sm text-[#999] hover:text-[#666] transition-colors"
+          >
+            ログアウト
+          </button>
+        </div>
       </header>
 
       {/* メインコンテンツ */}

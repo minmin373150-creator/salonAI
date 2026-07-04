@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { saveHistory } from '@/lib/saveHistory'
 import Link from 'next/link'
 import { ArrowLeft, Users, Loader, Copy, Check, Plus, Trash2 } from 'lucide-react'
 import Button from '@/components/ui/Button'
@@ -52,6 +53,7 @@ export default function CompetitorResearchPage() {
         text += decoder.decode(value, { stream: true })
         setOutput(text)
       }
+      await saveHistory('競合リサーチ分析', `自社:${ownUrl.substring(0, 50)}`, text)
     } catch {
       setError('通信エラーが発生しました。もう一度お試しください。')
     } finally {
