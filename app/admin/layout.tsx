@@ -1,19 +1,22 @@
 export const dynamic = 'force-dynamic'
 
+import { redirect } from 'next/navigation'
+import { isAdmin } from '@/lib/isAdmin'
 import Link from 'next/link'
-import { Users, CreditCard, Bell, BookOpen, FileText, LayoutDashboard } from 'lucide-react'
+import { Users, CreditCard, Shield, LayoutDashboard, History } from 'lucide-react'
 import Logo from '@/components/ui/Logo'
 
 const NAV_ITEMS = [
   { href: '/admin', icon: LayoutDashboard, label: 'ダッシュボード' },
-  { href: '/admin/users', icon: Users, label: '会員管理' },
-  { href: '/admin/payments', icon: CreditCard, label: '決済管理' },
-  { href: '/admin/announcements', icon: Bell, label: 'お知らせ' },
-  { href: '/admin/knowledge', icon: BookOpen, label: '知識ベース' },
-  { href: '/admin/prompts', icon: FileText, label: 'プロンプト管理' },
+  { href: '/admin/users', icon: Users, label: 'ユーザー管理' },
+  { href: '/admin/history', icon: History, label: '使用履歴' },
+  { href: '/admin/members', icon: CreditCard, label: '会員管理' },
+  { href: '/admin/admins', icon: Shield, label: '管理者一覧' },
 ]
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default async function AdminLayout({ children }: { children: React.ReactNode }) {
+  const admin = await isAdmin()
+  if (!admin) redirect('/chat')
   return (
     <div className="flex min-h-screen bg-[#FAF7FD]">
       {/* サイドバー */}
