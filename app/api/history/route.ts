@@ -3,17 +3,23 @@ import { createClient } from '@/lib/supabase/server'
 
 export const dynamic = 'force-dynamic'
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   const supabase = await createClient()
   const { data: { user }, error } = await supabase.auth.getUser()
   if (error || !user) return Response.json({ error: 'Unauthorized' }, { status: 401 })
 
-  const { data, error: dbError } = await supabase
+  const tool = req.nextUrl.searchParams.get('tool')
+
+  let query = supabase
     .from('tool_history')
     .select('*')
     .eq('user_id', user.id)
     .order('created_at', { ascending: false })
-    .limit(100)
+    .limit(50)
+
+  if (tool) query = query.eq('tool_name', tool)
+
+  const { data, error: dbError } = await query
 
   if (dbError) return Response.json({ error: dbError.message }, { status: 500 })
   return Response.json({ history: data })

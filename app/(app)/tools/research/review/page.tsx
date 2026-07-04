@@ -2,11 +2,13 @@
 
 import { useState } from 'react'
 import { saveHistory } from '@/lib/saveHistory'
+import HistoryTab from '@/components/ui/HistoryTab'
 import Link from 'next/link'
 import { ArrowLeft, Star, Loader, Copy, Check } from 'lucide-react'
 import Button from '@/components/ui/Button'
 
 export default function ReviewAnalysisPage() {
+  const [tab, setTab] = useState<'create' | 'history'>('create')
   const [reviewUrl, setReviewUrl] = useState('')
   const [output, setOutput] = useState('')
   const [loading, setLoading] = useState(false)
@@ -74,6 +76,16 @@ export default function ReviewAnalysisPage() {
       </header>
 
       <main className="max-w-3xl mx-auto px-4 py-8">
+        <div className="flex gap-2 mb-6">
+          {(['create', 'history'] as const).map(t => (
+            <button key={t} onClick={() => setTab(t)}
+              className={`px-5 py-2 rounded-xl text-sm font-bold transition-colors ${tab === t ? 'bg-[#C9A8E2] text-white' : 'bg-white text-[#999] border border-[#EDE8F5]'}`}>
+              {t === 'create' ? '作成' : '履歴'}
+            </button>
+          ))}
+        </div>
+        {tab === 'history' && <HistoryTab toolName="口コミ分析" />}
+        {tab === 'create' && <>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div className="bg-white rounded-2xl border border-[#EDE8F5] p-5">
             <label className="text-sm font-bold text-[#333] mb-1 block">
@@ -170,6 +182,7 @@ export default function ReviewAnalysisPage() {
             )}
           </div>
         )}
+      </>}
       </main>
     </div>
   )

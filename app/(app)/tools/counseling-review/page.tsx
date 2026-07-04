@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { saveHistory } from '@/lib/saveHistory'
 import Link from 'next/link'
 import { ArrowLeft, Stethoscope, Loader } from 'lucide-react'
+import HistoryTab from '@/components/ui/HistoryTab'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import type { Components } from 'react-markdown'
@@ -79,6 +80,7 @@ const SALON_TYPES = [
 ]
 
 export default function CounselingReviewPage() {
+  const [tab, setTab] = useState<'create' | 'history'>('create')
   const [transcript, setTranscript] = useState('')
   const [salonType, setSalonType] = useState('')
   const [result, setResult] = useState('')
@@ -141,6 +143,17 @@ export default function CounselingReviewPage() {
       </header>
 
       <main className="max-w-3xl mx-auto px-4 py-8">
+        {/* タブ */}
+        <div className="flex gap-2 mb-6">
+          {(['create', 'history'] as const).map(t => (
+            <button key={t} onClick={() => setTab(t)}
+              className={`px-5 py-2 rounded-xl text-sm font-bold transition-colors ${tab === t ? 'bg-[#C9A8E2] text-white' : 'bg-white text-[#999] border border-[#EDE8F5]'}`}>
+              {t === 'create' ? '作成' : '履歴'}
+            </button>
+          ))}
+        </div>
+        {tab === 'history' && <HistoryTab toolName="カウンセリング添削" />}
+        {tab === 'create' && <>
         {/* 入力フォーム */}
         <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-[#EDE8F5] p-6 mb-6">
           <h2 className="font-bold text-[#333] mb-1">カウンセリングの文字起こしを貼り付けてください</h2>
@@ -221,6 +234,7 @@ export default function CounselingReviewPage() {
             )}
           </div>
         )}
+      </>}
       </main>
     </div>
   )

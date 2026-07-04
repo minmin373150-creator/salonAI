@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { saveHistory } from '@/lib/saveHistory'
 import Link from 'next/link'
+import HistoryTab from '@/components/ui/HistoryTab'
 import { ArrowLeft, Star, Loader, Copy, Check } from 'lucide-react'
 import Button from '@/components/ui/Button'
 
@@ -12,6 +13,7 @@ const SALON_TYPES = [
 ]
 
 export default function ReviewReplyPage() {
+  const [tab, setTab] = useState<'create' | 'history'>('create')
   const [salonType, setSalonType] = useState('')
   const [review, setReview] = useState('')
   const [concern, setConcern] = useState('')
@@ -86,6 +88,16 @@ export default function ReviewReplyPage() {
       </header>
 
       <main className="max-w-3xl mx-auto px-4 py-8">
+        <div className="flex gap-2 mb-6">
+          {(['create', 'history'] as const).map(t => (
+            <button key={t} onClick={() => setTab(t)}
+              className={`px-5 py-2 rounded-xl text-sm font-bold transition-colors ${tab === t ? 'bg-[#C9A8E2] text-white' : 'bg-white text-[#999] border border-[#EDE8F5]'}`}>
+              {t === 'create' ? '作成' : '履歴'}
+            </button>
+          ))}
+        </div>
+        {tab === 'history' && <HistoryTab toolName="口コミ返信作成" />}
+        {tab === 'create' && <>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
 
           {/* 業種選択 */}
@@ -232,6 +244,7 @@ export default function ReviewReplyPage() {
             )}
           </div>
         )}
+      </>}
       </main>
     </div>
   )

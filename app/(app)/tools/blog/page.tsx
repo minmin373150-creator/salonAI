@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { saveHistory } from '@/lib/saveHistory'
+import HistoryTab from '@/components/ui/HistoryTab'
 import Link from 'next/link'
 import { ArrowLeft, FileText, Loader, Copy, Check, ChevronRight, RotateCcw } from 'lucide-react'
 import Button from '@/components/ui/Button'
@@ -68,6 +69,7 @@ const CATEGORY_BADGE: Record<string, string> = {
 }
 
 export default function BlogPage() {
+  const [tab, setTab] = useState<'create' | 'history'>('create')
   const [phase, setPhase] = useState<Phase>('target')
   const [target, setTarget] = useState('')
   const [ideasText, setIdeasText] = useState('')
@@ -176,7 +178,16 @@ export default function BlogPage() {
       </header>
 
       <main className="max-w-3xl mx-auto px-4 py-8">
-
+        <div className="flex gap-2 mb-6">
+          {(['create', 'history'] as const).map(t => (
+            <button key={t} onClick={() => setTab(t)}
+              className={`px-5 py-2 rounded-xl text-sm font-bold transition-colors ${tab === t ? 'bg-[#C9A8E2] text-white' : 'bg-white text-[#999] border border-[#EDE8F5]'}`}>
+              {t === 'create' ? '作成' : '履歴'}
+            </button>
+          ))}
+        </div>
+        {tab === 'history' && <HistoryTab toolName="ブログ作成" />}
+        {tab === 'create' && <>
         {/* ============ ステップ1：ターゲット入力 ============ */}
         {phase === 'target' && (
           <form onSubmit={generateIdeas} className="flex flex-col gap-5">
@@ -362,6 +373,7 @@ export default function BlogPage() {
             )}
           </div>
         )}
+      </>}
       </main>
     </div>
   )
